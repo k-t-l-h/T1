@@ -20,9 +20,9 @@ typedef struct {
 
 int main(int argc, char** argv)
 {
-    //ошибка: файл с датой не передан
-    if (argc < 2) {
-        printf("No file was specified\n");
+    //ошибка: файл с датой не передан или не передано название
+    if (argc < 3) {
+        printf("Not enough arguments\n");
         return 0;
     }
 
@@ -42,10 +42,7 @@ int main(int argc, char** argv)
             return 0;
         }
 
-    //TODO: обработать ошибки ввода
-    char Country[SIZE] = "abc";
-    printf("Input country:");
-    fscanf(stdin, "%s", &Country);
+
 
 
     for (int i = 0; i < n; i++) {
@@ -56,7 +53,7 @@ int main(int argc, char** argv)
         fscanf(fp, "%f", &toy.Avaliable);
         fscanf(fp, "%s", &toy.Country);
 
-        if (strcmp(toy.Country, Country) == 0) {
+        if (strcmp(toy.Country, argv[2]) == 0) {
             printf("Name: %s\n", toy.Name);
             printf("Price: %f\n", toy.Price);
             printf("Avaliable: %d\n", toy.Avaliable);
