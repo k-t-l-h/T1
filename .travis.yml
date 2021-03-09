@@ -4,6 +4,7 @@ os: linux
 
 #Добавляем тесты
 before_install:
+  - sudo apt update
   - sudo apt install cppcheck
   - sudo apt install valgrind
 
