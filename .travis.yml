@@ -2,6 +2,12 @@ language: c
 
 os: linux
 
+#Добавляем тесты
+before_install:
+  - sudo apt install cppcheck
+  - sudo apt install valgrind
+
+
 compiler:
   - gcc
   - clang
@@ -12,3 +18,5 @@ script:
   - cd build
   - cmake ..
   - make
+  - cppcheck --quiet --error-exitcode=1 .
+  - valgrind --leak-check=full ./*

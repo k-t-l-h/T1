@@ -10,7 +10,6 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/incorrect_data.txt
 
 #тестирование
 enable_testing()
-set(TIMEOUT 0.5)
 add_test(NAME AllGood
         COMMAND T1 ../src/data.txt Russia)
 set_tests_properties(AllGood PROPERTIES
