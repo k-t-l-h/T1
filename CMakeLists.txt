@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(T1)
 
-#include(ExternalProject)
+include(ExternalProject)
 add_executable(T1 src/main.c)
 #добавить текстовый файлик
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/data.txt
@@ -30,12 +30,6 @@ if (ENABLE_TESTS)
             PASS_REGULAR_EXPRESSION "Incorrect data format\n")
 endif ()
 
-#[[
-
-#включаем покрытие кода
-if (ENABLE_COVERAGE)
-    
-endif ()
 
 #включаем статический анализ
 if (ENABLE_STATIC_CHECK)
@@ -59,10 +53,11 @@ if (ENABLE_STATIC_CHECK)
     )
 
     list(APPEND CPPCHECK_ARGS
-            --enable=warning,style,performance,portability,unusedFunction
+            --enable=warning,style,unusedFunction,missingInclude
+            --inconclusive #проверяем маловероятные
             --std=c++11
-            --verbose
-            --error-exitcode=1
+            --verbose #более подробный анализ
+            --error-exitcode=1 #роняем тесты
             --language=c++
             -I ${CMAKE_SOURCE_DIR}/include
             ${CMAKE_SOURCE_DIR}/src/*.c
@@ -71,9 +66,14 @@ if (ENABLE_STATIC_CHECK)
 
 endif ()
 
-
+#[[
 #включаем
 if (ENABLE_VALGRIND_CHECK)
+
+endif ()
+
+#включаем покрытие кода
+if (ENABLE_COVERAGE)
 
 endif ()
 ]]

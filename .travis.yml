@@ -5,8 +5,8 @@ os: linux
 #Добавляем тесты
 before_install:
   - sudo apt update
-  - sudo apt install cppcheck
-  - sudo apt install valgrind
+  #- sudo apt install cppcheck
+  #- sudo apt install valgrind
 
 
 compiler:
@@ -17,5 +17,5 @@ compiler:
 script:
   - mkdir build
   - cd build
-  - cmake .. -DENABLE_TESTS=ON
+  - cmake .. -DENABLE_TESTS=ON -DENABLE_STATIC_CHECK=ON
   - make
