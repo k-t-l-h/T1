@@ -21,8 +21,8 @@ script:
   - cd build
   - cmake .. #-DENABLE_TESTS=ON -DENABLE_STATIC_CHECK=ON
   - make
-  - make test
-  #- ctest -VV -t memcheck
+  #- make test
+  - ctest -VV -t memcheck
 
 after_success:
   - lcov --capture --directory . --output-file coverage.info
