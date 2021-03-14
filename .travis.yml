@@ -6,6 +6,7 @@ addons:
   apt:
     packages:
       - valgrind
+      - lcov
 
 before_install:
   - sudo apt update
@@ -18,6 +19,13 @@ compiler:
 script:
   - mkdir build
   - cd build
-  - cmake .. -DENABLE_TESTS=ON -DENABLE_STATIC_CHECK=ON
+  - cmake .. #-DENABLE_TESTS=ON -DENABLE_STATIC_CHECK=ON
   - make
-  - ctest -VV -t memcheck
+  - make test
+  #- ctest -VV -t memcheck
+
+after_success:
+  - lcov --capture --directory . --output-file coverage.info
+  - lcov --remove coverage.info '/usr/*' --output-file coverage.info
+  - lcov --list coverage.info
+  - bash <(curl -s https://codecov.io/bash) -f coverage.info
