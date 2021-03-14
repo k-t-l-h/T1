@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 project(T1)
 
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_C_FLAGS "--coverage")
+
 include(ExternalProject)
 add_executable(T1 src/main.c)
 #добавить текстовый файлик
@@ -11,6 +15,7 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/incorrect_data.txt
 
 #Если мы хотим потестировать файлик
 if (ENABLE_TESTS)
+    message("Tests enabled")
     #тестирование
     enable_testing()
     add_test(NAME AllGood
@@ -33,6 +38,7 @@ endif ()
 
 #включаем статический анализ
 if (ENABLE_STATIC_CHECK)
+    message("CPPCheck enabled")
 
     list(APPEND CPPCHECK_CMAKE_ARGS
             "-DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}"
@@ -66,11 +72,15 @@ if (ENABLE_STATIC_CHECK)
 
 endif ()
 
+
 #[[
 #включаем
 if (ENABLE_VALGRIND_CHECK)
+    message("Valgrind enabled")
+    find_program(Valgrind)
 
 endif ()
+
 
 #включаем покрытие кода
 if (ENABLE_COVERAGE)
