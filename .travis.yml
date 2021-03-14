@@ -2,12 +2,13 @@ language: c
 
 os: linux
 
-#Добавляем тесты
+addons:
+  apt:
+    packages:
+      - valgrind
+
 before_install:
   - sudo apt update
-  #- sudo apt install cppcheck
-  #- sudo apt install valgrind
-
 
 compiler:
   - gcc
@@ -19,3 +20,4 @@ script:
   - cd build
   - cmake .. -DENABLE_TESTS=ON -DENABLE_STATIC_CHECK=ON
   - make
+  - ctest -t memcheck
