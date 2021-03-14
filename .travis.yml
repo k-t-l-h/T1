@@ -17,7 +17,5 @@ compiler:
 script:
   - mkdir build
   - cd build
-  - cmake ..
+  - cmake .. -DENABLE_TESTS=ON
   - make
-  - cppcheck --quiet --error-exitcode=1 .
-  - valgrind --leak-check=full ./*
