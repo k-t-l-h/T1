@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
     int check = 0;
 
     check = fscanf(fp, "%d", &n);
-    if (check != 1) {
+    if (1 != check) {
         printf("Incorrect data format\n");
         return 0;
     }
@@ -51,10 +51,10 @@ int main(int argc, char** argv) {
 
         //EILSEQ, EINVAL and other check
         //SHOULD specify a field width for the "%s" string placeholder
-        fscanf(fp, "%31s", &toy->Name);
+        fscanf(fp, "%31s", toy->Name);
         fscanf(fp, "%f", &toy->Price);
-        fscanf(fp, "%f", &toy->Avaliable);
-        fscanf(fp, "%31s", &toy->Country);
+        fscanf(fp, "%u", &toy->Avaliable);
+        fscanf(fp, "%31s", toy->Country);
 
         if (strcmp(toy->Country, argv[2]) == 0) {
             printf("Name: %s\n", toy->Name);
