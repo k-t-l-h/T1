@@ -73,7 +73,6 @@ if (ENABLE_STATIC_CHECK)
 endif ()
 
 
-
 #включаем
 if (ENABLE_VALGRIND_CHECK)
     message("Valgrind enabled")
@@ -85,11 +84,3 @@ if (ENABLE_VALGRIND_CHECK)
     endif ()
 
 endif ()
-
-#[[
-
-#включаем покрытие кода
-if (ENABLE_COVERAGE)
-
-endif()
-]]
