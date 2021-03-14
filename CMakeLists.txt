@@ -23,7 +23,7 @@ if (ENABLE_TESTS)
             COMMAND T1 ../src/data.txt Russia)
     set_tests_properties(AllGood PROPERTIES
             PASS_REGULAR_EXPRESSION
-            "Name: Toy\nPrice: 2.000000\nAvaliable: 1073741824\nCountry: Russia\n")
+            "Name: Toy\nPrice: 2.000000\nAvaliable: 2\nCountry: Russia\n")
 
     add_test(NAME OneArg
             COMMAND T1 ../src/data.txt )
