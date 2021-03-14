@@ -20,4 +20,4 @@ script:
   - cd build
   - cmake .. -DENABLE_TESTS=ON -DENABLE_STATIC_CHECK=ON
   - make
-  - ctest -t memcheck
+  - ctest -VV -t memcheck

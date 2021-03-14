@@ -73,17 +73,23 @@ if (ENABLE_STATIC_CHECK)
 endif ()
 
 
-#[[
+
 #включаем
 if (ENABLE_VALGRIND_CHECK)
     message("Valgrind enabled")
-    find_program(Valgrind)
+    find_program(VALGRIND valgrind REQUIRED)
+
+    if(VALGRIND)
+        message("Valgrind found")
+        set(VALGRIND_OPTIONS "--leak-check=full --track-origins=yes --error-exitcode=1")
+    endif ()
 
 endif ()
 
+#[[
 
 #включаем покрытие кода
 if (ENABLE_COVERAGE)
 
-endif ()
+endif()
 ]]
