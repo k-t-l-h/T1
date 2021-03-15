@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
         return 0;
     }
 
-    FILE* fp;
+    FILE* fp = NULL;
     if ((fp = fopen(argv[1], "r")) == NULL) {
         printf("Can't open specified file\n");
         return 0;
@@ -51,15 +51,31 @@ int main(int argc, char** argv) {
 
         //EILSEQ, EINVAL and other check
         //SHOULD specify a field width for the "%s" string placeholder
-        fscanf(fp, "%31s", toy->Name);
-        fscanf(fp, "%f", &toy->Price);
-        fscanf(fp, "%u", &toy->Avaliable);
-        fscanf(fp, "%31s", toy->Country);
+        if (1 != fscanf(fp, "%31s", toy->Name)) {
+            printf("Incorrect input in name field \n");
+            free(toy);
+            return 0;
+        }
+        if (1 != fscanf(fp, "%f", &toy->Price)) {
+            printf("Incorrect input in price field \n");
+            free(toy);
+            return 0;
+        }
+        if (1 !=  fscanf(fp, "%u", &toy->Avaliable)) {
+            printf("Incorrect input in avaliable num field \n");
+            free(toy);
+            return 0;
+        }
+        if (1 != fscanf(fp, "%31s", toy->Country)) {
+            printf("Incorrect input in country field \n");
+            free(toy);
+            return 0;
+        }
 
         if (strcmp(toy->Country, argv[2]) == 0) {
             printf("Name: %s\n", toy->Name);
             printf("Price: %f\n", toy->Price);
-            printf("Avaliable: %d\n", toy->Avaliable);
+            printf("Avaliable: %u\n", toy->Avaliable);
             printf("Country: %s\n", toy->Country);
         }
 
