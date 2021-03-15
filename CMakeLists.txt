@@ -7,7 +7,7 @@ set(CMAKE_C_FLAGS "--coverage")
 set(CMAKE_CXX_FLAGS "-Wall -Werror -Wpedantic")
 
 include(ExternalProject)
-add_executable(T1 src/main.c)
+add_executable(T1 src/main.c src/toy.h src/toy.c)
 #добавить текстовый файлик
 file(COPY test_data/data.txt
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
@@ -15,7 +15,7 @@ file(COPY test_data/incorrect_data.txt
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 #Если мы хотим потестировать файлик
-if (ENABLE_TESTS)
+#if (ENABLE_TESTS)
     message("Tests enabled")
     #тестирование
     enable_testing()
@@ -41,11 +41,11 @@ if (ENABLE_TESTS)
             PASS_REGULAR_EXPRESSION "Incorrect input in price field\n")
 
     add_test(NAME IncorrectFields2
-            COMMAND T1 ../test_data/fscanf2.txt Russia)
+            COMMAND T1 ../test_data/fscanf_2.txt Russia)
     set_tests_properties(IncorrectFields2 PROPERTIES
             PASS_REGULAR_EXPRESSION "Incorrect input in avaliable num field\n")
 
-endif ()
+#endif ()
 
 
 #включаем статический анализ

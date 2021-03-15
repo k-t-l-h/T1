@@ -23,8 +23,9 @@ script:
   - make
   - ctest -VV -t memcheck
 
-after_success:
-  - lcov --capture --directory . --output-file coverage.info
-  - lcov --remove coverage.info '/usr/*' --output-file coverage.info
-  - lcov --list coverage.info
-  - bash <(curl -s https://codecov.io/bash) -f coverage.info
+
+#after_success:
+#  - lcov --capture --directory . --output-file coverage.info
+#  - lcov --remove coverage.info '/usr/*' --output-file coverage.info
+#  - lcov --list coverage.info
+#  - bash <(curl -s https://codecov.io/bash) -f coverage.info
