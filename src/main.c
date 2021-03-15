@@ -52,17 +52,17 @@ int main(int argc, char** argv) {
         //EILSEQ, EINVAL and other check
         //SHOULD specify a field width for the "%s" string placeholder
         if (1 != fscanf(fp, "%31s", toy->Name)) {
-            printf("Incorrect input in name field \n");
+            printf("Incorrect input in name field\n");
             free(toy);
             return 0;
         }
         if (1 != fscanf(fp, "%f", &toy->Price)) {
-            printf("Incorrect input in price field \n");
+            printf("Incorrect input in price field\n");
             free(toy);
             return 0;
         }
         if (1 !=  fscanf(fp, "%u", &toy->Avaliable)) {
-            printf("Incorrect input in avaliable num field \n");
+            printf("Incorrect input in avaliable num field\n");
             free(toy);
             return 0;
         }

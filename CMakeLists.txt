@@ -9,9 +9,9 @@ set(CMAKE_CXX_FLAGS "-Wall -Werror -Wpedantic")
 include(ExternalProject)
 add_executable(T1 src/main.c)
 #добавить текстовый файлик
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/data.txt
+file(COPY test_data/data.txt
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/incorrect_data.txt
+file(COPY test_data/incorrect_data.txt
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 #Если мы хотим потестировать файлик
@@ -20,20 +20,31 @@ if (ENABLE_TESTS)
     #тестирование
     enable_testing()
     add_test(NAME AllGood
-            COMMAND T1 ../src/data.txt Russia)
+            COMMAND T1 ../test_data/data.txt Russia)
     set_tests_properties(AllGood PROPERTIES
             PASS_REGULAR_EXPRESSION
             "Name: Toy\nPrice: 2.000000\nAvaliable: 2\nCountry: Russia\n")
 
     add_test(NAME OneArg
-            COMMAND T1 ../src/data.txt )
+            COMMAND T1 ../test_data/data.txt )
     set_tests_properties(OneArg PROPERTIES
             PASS_REGULAR_EXPRESSION "Not enough arguments\n")
 
     add_test(NAME FileNotFound
-            COMMAND T1 ../src/incorrect_data.txt Russia)
+            COMMAND T1 ../test_data/incorrect_data.txt Russia)
     set_tests_properties(FileNotFound PROPERTIES
             PASS_REGULAR_EXPRESSION "Incorrect data format\n")
+
+    add_test(NAME IncorrectFields
+            COMMAND T1 ../test_data/fscanf.txt Russia)
+    set_tests_properties(IncorrectFields PROPERTIES
+            PASS_REGULAR_EXPRESSION "Incorrect input in price field\n")
+
+    add_test(NAME IncorrectFields2
+            COMMAND T1 ../test_data/fscanf2.txt Russia)
+    set_tests_properties(IncorrectFields2 PROPERTIES
+            PASS_REGULAR_EXPRESSION "Incorrect input in avaliable num field\n")
+
 endif ()
 
 
