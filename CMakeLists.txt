@@ -45,6 +45,11 @@ file(COPY test_data/incorrect_data.txt
     set_tests_properties(IncorrectFields2 PROPERTIES
             PASS_REGULAR_EXPRESSION "Incorrect input in avaliable num field\n")
 
+    add_test(NAME Memory
+            COMMAND T1 ../test_data/memory.txt Russia)
+    set_tests_properties(Memory PROPERTIES
+            PASS_REGULAR_EXPRESSION "No toys to be found\n")
+
 #endif ()
 
 

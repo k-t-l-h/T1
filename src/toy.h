@@ -11,6 +11,7 @@ typedef struct {
 } Toy;
 
 void free_toys(Toy*);
+Toy* read_all_toys(FILE*, size_t*);
 void find_toy_by_country(FILE*, const char*);
 
 #endif  // T1_TOY_H
