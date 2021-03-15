@@ -41,7 +41,7 @@ if (ENABLE_TESTS)
             PASS_REGULAR_EXPRESSION "Incorrect input in price field\n")
 
     add_test(NAME IncorrectFields2
-            COMMAND T1 ../test_data/fscanf2.txt Russia)
+            COMMAND T1 ../test_data/fscanf_2.txt Russia)
     set_tests_properties(IncorrectFields2 PROPERTIES
             PASS_REGULAR_EXPRESSION "Incorrect input in avaliable num field\n")
 
