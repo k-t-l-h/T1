@@ -22,7 +22,7 @@ set(LIB_SOURCE_FILES src/toy.c src/test_toy.cpp)
 
 add_library(url_parse_std_lib STATIC ${LIB_SOURCE_FILES})
 
-
+link_libraries(gcov)
 enable_testing()
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
