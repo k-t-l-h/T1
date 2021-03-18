@@ -23,14 +23,19 @@ void print_toy(Toy* toy) {
 }
 
 //дополнительная функция загрузки массива информации из файла
-Toy* read_all_toys(FILE* fp, size_t* toys_num) {
+Toy* read_all_toys(FILE* fp, size_t * toys_num) {
+    if (fp == NULL) {
+        printf("File cannot be opened\n");
+        return NULL;
+    }
+
     if (fscanf(fp, "%Iu", toys_num) != 1) {
         printf("Incorrect data format\n");
         return NULL;
     }
 
     //не аллоцируем нулевую память
-    if (*toys_num == 0) {
+    if (*toys_num <= 0) {
         printf("No toys to be found\n");
         return NULL;
     }

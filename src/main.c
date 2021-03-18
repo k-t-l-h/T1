@@ -25,11 +25,16 @@ int main(int argc, char** argv) {
         return FILEERROR;
     }
 
-    int toy_num = 0;
+    size_t toy_num = 0;
     Toy* toys = read_all_toys(fp, &toy_num);
-    find_toys(toys, toy_num, argv[2]);
+    int found = 0;
+    found = find_toys(toys, toy_num, argv[2]);
+    if (found > 0) {
+        printf("Toys found :%d\n", found);
+    } else {
+        printf("Found no toys\n");
+    }
     free_toys(toys);
-
     fclose(fp);
 
     return 0;

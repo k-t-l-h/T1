@@ -11,14 +11,18 @@ addons:
 
 before_install:
   - sudo apt update
-  - cd src
-  - clang-format -i -style=Google *.h *.cpp *.c
-  - cd ..
 
 compiler:
   - gcc
   - clang
 
+install:
+  - sudo apt-get install libgtest-dev
+  - cd /usr/src/gtest
+  - sudo cmake .
+  - sudo make
+  - sudo cp *.a /usr/lib
+  - cd -
 
 script:
   - mkdir build
