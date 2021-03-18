@@ -18,7 +18,7 @@ void print_toy(Toy* toy) {
 
     printf("Toy name: %s\n", toy->Name);
     printf("Price: %.2f\n", toy->Price);  //округляем до копеек
-    printf("Avaliable: %Iu\n", toy->Avaliable);
+    printf("Avaliable: %zu\n", toy->Avaliable);
     printf("Country: %s\n", toy->Country);
 }
 
@@ -29,7 +29,7 @@ Toy* read_all_toys(FILE* fp, size_t * toys_num) {
         return NULL;
     }
 
-    if (fscanf(fp, "%Iu", toys_num) != 1) {
+    if (fscanf(fp, "%zu", toys_num) != 1) {
         printf("Incorrect data format\n");
         return NULL;
     }
@@ -60,7 +60,7 @@ Toy* read_all_toys(FILE* fp, size_t * toys_num) {
             free_toys(toys);
             return NULL;
         }
-        if (1 != fscanf(fp, "%Iu", &toys[i].Avaliable)) {
+        if (1 != fscanf(fp, "%zu", &toys[i].Avaliable)) {
             printf("Incorrect input in avaliable num field\n");
             free_toys(toys);
             return NULL;

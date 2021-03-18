@@ -10,6 +10,7 @@ addons:
 
 compiler:
   - gcc
+  - clang
 
 install:
   - sudo apt-get update
@@ -29,9 +30,9 @@ before_script:
   - clang-format -i -style=Google *.h *.cpp *.c
 
 script:
-  - cmake .. -DENABLE_TESTS=ON -DENABLE_STATIC_CHECK=ON
+  - cmake .. #-DENABLE_STATIC_CHECK=ON
   - make
-  - ctest -VV -t memcheck
+  #- ctest -VV -t memcheck
 
 
 after_success:

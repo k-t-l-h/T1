@@ -14,7 +14,7 @@ file(COPY test_data/data.txt
 file(COPY test_data/incorrect_data.txt
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-#Если мы хотим потестировать файлик
+
 include_directories(src)
 
 set(LIB_SOURCE_FILES src/toy.c src/test_toy.cpp)
@@ -22,21 +22,17 @@ set(LIB_SOURCE_FILES src/toy.c src/test_toy.cpp)
 add_library(url_parse_std_lib STATIC ${LIB_SOURCE_FILES})
 
 
-if (ENABLE_TESTS)
-    enable_testing()
-    message("Tests enabled")
-    find_package(GTest REQUIRED)
+enable_testing()
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
 
-    include_directories(${GTEST_INCLUDE_DIRS})
+add_executable(test_toy.out src/test_toy.cpp)
+target_link_libraries(test_toy.out url_parse_std_lib)
 
-    add_executable(test_toy.out src/test_toy.cpp)
-    target_link_libraries(test_toy.out url_parse_std_lib)
+target_link_libraries(test_toy.out ${GTEST_LIBRARIES})
+target_link_libraries(test_toy.out pthread)
 
-    target_link_libraries(test_toy.out ${GTEST_LIBRARIES})
-    target_link_libraries(test_toy.out pthread)
-
-    add_test(test_toy.out test_toy.out)
-endif ()
+add_test(test_toy.out test_toy.out)
 
 #включаем статический анализ
 if (ENABLE_STATIC_CHECK)
