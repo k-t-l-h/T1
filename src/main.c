@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
         return FILEERROR;
     }
 
-    ssize_t toy_num = 0;
+    size_t toy_num = 0;
     Toy* toys = read_all_toys(fp, &toy_num);
     int found = 0;
     found = find_toys(toys, toy_num, argv[2]);

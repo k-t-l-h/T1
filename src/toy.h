@@ -12,7 +12,7 @@ typedef struct {
 
 void free_toys(Toy*);
 void print_toy(Toy*);
-Toy* read_all_toys(FILE*, ssize_t *);
-int find_toys(Toy*, ssize_t, const char*);
+Toy* read_all_toys(FILE*, size_t *);
+int find_toys(Toy*, size_t, const char*);
 
 #endif  // T1_TOY_H
