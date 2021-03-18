@@ -7,16 +7,16 @@ addons:
     packages:
       - valgrind
       - lcov
-      - clang-format
-
-before_install:
-  - sudo apt update
 
 compiler:
   - gcc
-  - clang
 
 install:
+  - sudo apt-get update
+  - sudo apt-get install clang-format
+  - sudo apt-get install libstdc++6
+  - sudo apt-get install cmake
+  # Google tests
   - sudo apt-get install libgtest-dev
   - cd /usr/src/gtest
   - sudo cmake .
@@ -24,9 +24,11 @@ install:
   - sudo cp *.a /usr/lib
   - cd -
 
+before_script:
+  - cd src
+  - clang-format -i -style=Google *.h *.cpp *.c
+
 script:
-  - mkdir build
-  - cd build
   - cmake .. -DENABLE_TESTS=ON -DENABLE_STATIC_CHECK=ON
   - make
   - ctest -VV -t memcheck

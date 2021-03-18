@@ -14,17 +14,19 @@ file(COPY test_data/data.txt
 file(COPY test_data/incorrect_data.txt
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-#добавляем как библиотеку
+#Если мы хотим потестировать файлик
+include_directories(src)
+
 set(LIB_SOURCE_FILES src/toy.c src/test_toy.cpp)
 
 add_library(url_parse_std_lib STATIC ${LIB_SOURCE_FILES})
 
 
-#Если мы хотим потестировать файлик
-#if (ENABLE_TESTS)
+if (ENABLE_TESTS)
     enable_testing()
     message("Tests enabled")
     find_package(GTest REQUIRED)
+
     include_directories(${GTEST_INCLUDE_DIRS})
 
     add_executable(test_toy.out src/test_toy.cpp)
@@ -32,41 +34,9 @@ add_library(url_parse_std_lib STATIC ${LIB_SOURCE_FILES})
 
     target_link_libraries(test_toy.out ${GTEST_LIBRARIES})
     target_link_libraries(test_toy.out pthread)
-    #тестирование
 
-   #[[ add_test(NAME AllGood
-            COMMAND T1 ../test_data/data.txt Russia)
-    set_tests_properties(AllGood PROPERTIES
-            PASS_REGULAR_EXPRESSION
-            "Toy name: Toy\nPrice: 2.00\nAvaliable: 2\nCountry: Russia\n")
-
-    add_test(NAME OneArg
-            COMMAND T1 ../test_data/data.txt )
-    set_tests_properties(OneArg PROPERTIES
-            PASS_REGULAR_EXPRESSION "Not enough arguments\n")
-
-    add_test(NAME FileNotFound
-            COMMAND T1 ../test_data/incorrect_data.txt Russia)
-    set_tests_properties(FileNotFound PROPERTIES
-            PASS_REGULAR_EXPRESSION "Incorrect data format\n")
-
-    add_test(NAME IncorrectFields
-            COMMAND T1 ../test_data/fscanf.txt Russia)
-    set_tests_properties(IncorrectFields PROPERTIES
-            PASS_REGULAR_EXPRESSION "Incorrect input in price field\n")
-
-    add_test(NAME IncorrectFields2
-            COMMAND T1 ../test_data/fscanf_2.txt Russia)
-    set_tests_properties(IncorrectFields2 PROPERTIES
-            PASS_REGULAR_EXPRESSION "Incorrect input in avaliable num field\n")
-
-    add_test(NAME Memory
-            COMMAND T1 ../test_data/memory.txt Russia)
-    set_tests_properties(Memory PROPERTIES
-            PASS_REGULAR_EXPRESSION "No toys to be found\n")]]
-
-#endif ()
-
+    add_test(test_toy.out test_toy.out)
+endif ()
 
 #включаем статический анализ
 if (ENABLE_STATIC_CHECK)

@@ -23,7 +23,7 @@ void print_toy(Toy* toy) {
 }
 
 //дополнительная функция загрузки массива информации из файла
-Toy* read_all_toys(FILE* fp, size_t * toys_num) {
+Toy* read_all_toys(FILE* fp, ssize_t * toys_num) {
     if (fp == NULL) {
         printf("File cannot be opened\n");
         return NULL;
@@ -76,7 +76,7 @@ Toy* read_all_toys(FILE* fp, size_t * toys_num) {
 }
 
 //функция поиска количества игрушек
-int find_toys(Toy* toys, size_t toys_size, const char* country) {
+int find_toys(Toy* toys, ssize_t toys_size, const char* country) {
     if (NULL == toys || NULL == country) {
         printf("Null data passed\n");
         return -1;

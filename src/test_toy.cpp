@@ -8,7 +8,7 @@ extern "C" {
 TEST(TEST_TOY, read_toys_good) {
     FILE* fp = nullptr;
     fp = fopen("data.txt", "r");
-    size_t num = 0;
+    ssize_t num = 0;
     Toy* toy = read_all_toys(fp, &num);
     ASSERT_NE(toy, nullptr);
     ASSERT_EQ(num, 1);
@@ -19,7 +19,7 @@ TEST(TEST_TOY, read_toys_bad) {
     FILE* fp = nullptr;
     fp = fopen("incorrect_data.txt", "r");
 
-    size_t num = 0;
+    ssize_t num = 0;
     Toy* toy = read_all_toys(fp, &num);
     ASSERT_EQ(toy, nullptr);
     ASSERT_EQ(num, 0);
@@ -30,7 +30,7 @@ TEST(TEST_TOY, read_toys_bad) {
 TEST(TEST_TOY, read_toys_null) {
     FILE* fp = nullptr;
 
-    size_t num = 0;
+    ssize_t num = 0;
     Toy* toy = read_all_toys(fp, &num);
     ASSERT_EQ(toy, nullptr);
     ASSERT_EQ(num, 0);
@@ -40,14 +40,14 @@ TEST(TEST_TOY, read_toys_null) {
 
 TEST(TEST_TOY, find_toys_bad) {
     Toy* toy = nullptr;
-    size_t size = 0;
+    ssize_t size = 0;
     int num = find_toys(toy, size, "");
     ASSERT_EQ(num, -1);
 }
 
 TEST(TEST_TOY, find_toys_good) {
     Toy toy = {"A", 2, 2, "B"};
-    size_t size = 1;
+    ssize_t size = 1;
     int num = find_toys(&toy, size, "B");
     ASSERT_EQ(num, 1);
 
