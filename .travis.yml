@@ -7,9 +7,12 @@ addons:
     packages:
       - valgrind
       - lcov
+      - clang-format
 
 before_install:
   - sudo apt update
+  - cd src
+  - clang-format -i -style=Google *.h *.cpp *.c
 
 compiler:
   - gcc

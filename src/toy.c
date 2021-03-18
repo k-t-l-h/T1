@@ -3,12 +3,26 @@
 #include <string.h>
 #include "toy.h"
 
+//дополнительная функция освобождения массива информации
 void free_toys(Toy* toy) {
     if (NULL != toy) {
         free(toy);
     }
 }
 
+//дополнительная функция печати информации об игрушке
+void print_toy(Toy* toy) {
+    if (NULL == toy) {
+        return;
+    }
+
+    printf("Toy name: %s\n", toy->Name);
+    printf("Price: %.2f\n", toy->Price);  //округляем до копеек
+    printf("Avaliable: %Iu\n", toy->Avaliable);
+    printf("Country: %s\n", toy->Country);
+}
+
+//дополнительная функция загрузки массива информации из файла
 Toy* read_all_toys(FILE* fp, size_t* toys_num) {
     if (fscanf(fp, "%Iu", toys_num) != 1) {
         printf("Incorrect data format\n");
@@ -56,24 +70,20 @@ Toy* read_all_toys(FILE* fp, size_t* toys_num) {
     return toys;
 }
 
-void find_toy_by_country(FILE* fp, const char* country) {
-    if (NULL == fp || NULL == country) {
+//функция поиска количества игрушек
+int find_toys(Toy* toys, size_t toys_size, const char* country) {
+    if (NULL == toys || NULL == country) {
         printf("Null data passed\n");
-        return;
+        return -1;
     }
 
-    size_t toys_num;
-    toys_num = 0;
-    Toy* toys = read_all_toys(fp, &toys_num);
-    if (NULL != toys) {
-        for (int i = 0; i < toys_num; ++i) {
-            if (strcmp(toys[i].Country, country) == 0) {
-                printf("Name: %s\n", toys[i].Name);
-                printf("Price: %f\n", toys[i].Price);
-                printf("Avaliable: %Iu\n", toys[i].Avaliable);
-                printf("Country: %s\n", toys[i].Country);
-            }
+    int num = 0;
+    for (int i = 0; i < toys_size; i++) {
+        if (strcmp(toys[i].Country, country) == 0) {
+            print_toy(&toys[i]);
+            num++;
         }
-        free_toys(toys);
     }
+
+    return num;
 }

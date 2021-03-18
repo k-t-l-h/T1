@@ -23,7 +23,7 @@ file(COPY test_data/incorrect_data.txt
             COMMAND T1 ../test_data/data.txt Russia)
     set_tests_properties(AllGood PROPERTIES
             PASS_REGULAR_EXPRESSION
-            "Name: Toy\nPrice: 2.000000\nAvaliable: 2\nCountry: Russia\n")
+            "Toy name: Toy\nPrice: 2.00\nAvaliable: 2\nCountry: Russia\n")
 
     add_test(NAME OneArg
             COMMAND T1 ../test_data/data.txt )

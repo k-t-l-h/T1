@@ -25,7 +25,11 @@ int main(int argc, char** argv) {
         return FILEERROR;
     }
 
-    find_toy_by_country(fp, argv[2]);
+    int toy_num = 0;
+    Toy* toys = read_all_toys(fp, &toy_num);
+    find_toys(toys, toy_num, argv[2]);
+    free_toys(toys);
+
     fclose(fp);
 
     return 0;
