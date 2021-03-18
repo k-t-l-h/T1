@@ -1,6 +1,7 @@
 #ifndef T1_TOY_H
 #define T1_TOY_H
 
+#include <stddef.h>
 #define SIZE 32
 
 typedef struct {
