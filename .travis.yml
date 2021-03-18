@@ -33,7 +33,7 @@ before_script:
 script:
   - cmake .. #-DENABLE_STATIC_CHECK=ON
   - make
-  - valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --leak-resolution=med  --track-origins=yes ./test_main.out || travis_terminate 1
+  - valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --leak-resolution=med  --track-origins=yes ./test_toy.out || travis_terminate 1
 
 
 after_success:
