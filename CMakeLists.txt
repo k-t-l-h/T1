@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 project(T1)
 
+set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "--coverage")
 set(CMAKE_C_FLAGS "--coverage")
-set(CMAKE_CXX_FLAGS "-Wall -Werror -Wpedantic")
+set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=c++0x -Wall -Werror -Wpedantic")
 
 include(ExternalProject)
 add_executable(T1 src/main.c src/toy.h src/toy.c)
