@@ -1,12 +1,13 @@
 #ifndef T1_TOY_H
 #define T1_TOY_H
 
+#include <stdio.h>
 #define SIZE 32
 
 typedef struct {
     char Name[SIZE];
     float Price;
-    ssize_t Avaliable;
+    size_t Avaliable;
     char Country[SIZE];
 } Toy;
 
