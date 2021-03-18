@@ -3,6 +3,7 @@ project(T1)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "--coverage")
 set(CMAKE_C_FLAGS "--coverage")
 set(CMAKE_CXX_FLAGS "-Wall -Werror -Wpedantic")
 
