@@ -2,8 +2,16 @@ language: c
 
 os: linux
 
+
+addons:
+  apt:
+    packages:
+      - valgrind
+      - lcov
+
 install:
   - sudo apt-get update
+  - sudo apt-get install valgrind
   - sudo apt-get install clang-format
   - sudo apt-get install libstdc++6
   - sudo apt-get install cmake
@@ -23,9 +31,14 @@ script:
   - cd build
   - cmake .. -DENABLE_TESTS=ON
   - make
+  - valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --leak-resolution=med --track-origins=yes ./test_check.out || travis_terminate 1
 
 after_success:
   - lcov --capture --directory . --output-file coverage.info
   - lcov --remove coverage.info '/usr/*' --output-file coverage.info
   - lcov --list coverage.info
   - bash <(curl -s https://codecov.io/bash) -f coverage.info
+
+#я так больше не могу
+notifications:
+  email: false
