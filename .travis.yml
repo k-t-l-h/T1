@@ -2,8 +2,15 @@ language: c
 
 os: linux
 
-before_install:
-  - sudo apt update
+install:
+  - sudo apt-get update
+  - sudo apt-get install libgtest-dev
+  - cd /usr/src/gtest
+  - sudo cmake .
+  - sudo make
+  - sudo cp *.a /usr/lib
+  - cd -
+
 
 compiler:
   - gcc
