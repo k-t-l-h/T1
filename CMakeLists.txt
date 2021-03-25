@@ -15,7 +15,7 @@ if (ENABLE_TESTS)
     find_package(GTest REQUIRED)
     include_directories(${GTEST_INCLUDE_DIRS})
 
-    add_executable(test_check.out src/test_check.cpp)
+    add_executable(test_check.out libs/naive/test_check.cpp)
 
     target_link_libraries(test_check.out url_parse_std_lib)
     target_link_libraries(test_check.out ${GTEST_LIBRARIES})
