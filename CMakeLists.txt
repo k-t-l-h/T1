@@ -15,7 +15,7 @@ add_library(PREDICATE_CHECK_P SHARED libs/parallel/check_p.c)
 
 
 add_executable(T1 main.c)
-include_directories(libs)
+target_link_libraries(T1 ${CMAKE_DL_LIBS} PREDICATE_CHECK PREDICATE_CHECK_P)
 
 if (ENABLE_TESTS)
     enable_testing()
