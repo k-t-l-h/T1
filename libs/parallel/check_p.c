@@ -13,5 +13,10 @@ size_t check(int (*f)(int), int* arr, size_t arr_size, int threads) {
             result++;
         }
     }
+
+    //TODO: разбить на несколько частей массив
+    //TODO: для каждой части запустить поток
+    //TODO: получить из потока число
+    //TODO: число вернуть
     return result;
 }

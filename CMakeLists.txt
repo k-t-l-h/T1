@@ -9,3 +9,24 @@ set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=c++0x -Wall -Werror -Wpedantic")
 
 include_directories(libs)
 add_executable(T1 main.c libs/naive/check.c libs/naive/check.h)
+
+if (ENABLE_TESTS)
+    enable_testing()
+    set(LIB_SOURCE_FILES libs/naive/check.c libs/naive/test_check.cpp)
+    add_library(url_parse_std_lib STATIC ${LIB_SOURCE_FILES})
+    add_library(url_parse_std_lib STATIC ${LIB_SOURCE_FILES})
+
+    link_libraries(gcov)
+    enable_testing()
+    find_package(GTest REQUIRED)
+    include_directories(${GTEST_INCLUDE_DIRS})
+
+    add_executable(test_check.out src/test_check.cpp)
+    target_link_libraries(test_check.out url_parse_std_lib)
+
+    target_link_libraries(test_check.out ${GTEST_LIBRARIES})
+    target_link_libraries(test_check.out pthread)
+
+    add_test(test_check.out test_check.out)
+
+endif()
