@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <string.h>
+
 //наивная реализация с передаваемым числом
 size_t check(int (*f)(int), int* arr, size_t arr_size) {
     size_t result = 0;

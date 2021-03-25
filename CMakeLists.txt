@@ -7,6 +7,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_C_FLAGS "--coverage")
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=c++0x -Wall -Werror -Wpedantic")
 
+#здесь статическая библиотека
+add_library(PREDICATE_CHECK STATIC libs/naive/check.c)
+#здесь динамическая библиотека
+add_library(PREDICATE_CHECK_P SHARED libs/parallel/check_p.c)
+
+
+
+add_executable(T1 main.c)
 include_directories(libs)
 
 if (ENABLE_TESTS)
@@ -29,3 +37,4 @@ if (ENABLE_TESTS)
     add_test(test_check.out test_check.out)
 
 endif()
+

@@ -1,3 +1,4 @@
+#include <dlfcn.h> //для работы с динамической библиотекой
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -57,13 +58,13 @@ int main(int argc, char** argv) {
     char* opts = "t:n:f:";
     char * filename = "";
     size_t num = 0;
+    size_t threads_num = 0;
 
     while ((opt = getopt(argc, argv, opts)) != -1) {
         switch (opt) {
-                //TODO: сделать его не обязательным
-            case 'p':
-                //здесь обработка числа потоков
-                //и проверка корректности
+            case 't':
+                threads_num = atoi(optarg);
+                printf("%d\n", threads_num);
                 break;
             case 'n':
                 num = atoi(optarg);
@@ -87,6 +88,19 @@ int main(int argc, char** argv) {
     //наивная реализация
     printf("%d", check(predicate, arr, num));
 
+    //работа с динамической библиотекой
+    void *library;
+    library = dlopen("checks.so", RTLD_NOW);
+    if (NULL == library) {
+      printf("Библиотека checks.so была не найдена, вернитесь позже");
+      return 0;
+    }
+    //создаем указатель на функцию
+    size_t (*check_p)(int (*f)(int), int* arr, size_t arr_size, int threads);
+    check_p = dlsym(library, "check_p");
 
-    return 0;
+    printf("%d", check_p(predicate, arr, num, threads_num));
+    dlclose(library);
+
+  return 0;
 }
