@@ -32,6 +32,7 @@ script:
   - cmake .. -DENABLE_TESTS=ON
   - make
   - valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --leak-resolution=med --track-origins=yes ./test_check.out || travis_terminate 1
+  - valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --leak-resolution=med --track-origins=yes ./test_check_p.out || travis_terminate 1
 
 after_success:
   - lcov --capture --directory . --output-file coverage.info

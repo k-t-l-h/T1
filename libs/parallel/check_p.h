@@ -8,8 +8,9 @@ typedef struct {
   size_t size;  //сколько процессов у нас есть
 } pipes_t;
 
-int check_p(int (*)(int), int*, size_t, int*);
-pipes_t* create(size_t);
+int check_predicate_range(int (*)(int), int*, size_t, size_t, size_t *);
+int check_p(int (*)(int), int*, size_t, size_t*);
+pipes_t* create_pipes(size_t);
 int free_pipes(pipes_t*);
 
 #endif  // T1_CHECK_P_H

@@ -4,7 +4,12 @@
 #include <unistd.h>
 #include "check_p.h"
 
-pipes_t *create(size_t size) {
+pipes_t *create_pipes(size_t size) {
+  //не создаем пустые структуры
+  if (size <= 0) {
+    return NULL;
+  }
+
   //память под саму структуру
   pipes_t *pipes = (pipes_t *)malloc(sizeof(pipes_t));
   if (pipes == NULL) {
@@ -14,7 +19,7 @@ pipes_t *create(size_t size) {
   pipes->size = size;
 
   //память под дескрипторы
-  pipes->fd = (int *)malloc(size * sizeof(int *));
+  pipes->fd = (int*)malloc(size * sizeof(int*));
   if (pipes->fd == NULL) {
     free(pipes);
     return NULL;
@@ -24,11 +29,26 @@ pipes_t *create(size_t size) {
     //готовим массив
     pipes->fd[i] = (int *)malloc(2 * sizeof(int *));
     if (pipes->fd[i] == NULL) {
-      // TODO: обработать ошибки
+      //закрываем все что успели открыть
+      for (size_t j = 0; j < i; ++j) {
+        close(pipes->fd[i][0]);
+        close(pipes->fd[i][1]);
+        free(pipes->fd[i]);
+      }
+      free(pipes->fd);
+      free(pipes);
+      return NULL;
     }
     //пытаемся заполнить новыми дескрипторами
     if (pipe(pipes->fd[i]) != 0) {
-      // TODO: обработать ошибки
+      for (size_t j = 0; j < size; ++j) {
+        close(pipes->fd[i][0]);
+        close(pipes->fd[i][1]);
+        free(pipes->fd[i]);
+      }
+      free(pipes->fd);
+      free(pipes);
+      return NULL;
     }
   }
 

@@ -52,34 +52,27 @@ int main(int argc, char** argv) {
     //: - имеет значение ::- возможно имеет значение
 
     //флаги
-    //t - количество потоков (не обязательно)
     //n - число чисел
     //f - откуда брать числа
-    char* opts = "t:n:f:";
+    char* opts = "n:f:";
     char * filename = "";
     size_t num = 0;
-    size_t threads_num = 0;
 
     while ((opt = getopt(argc, argv, opts)) != -1) {
         switch (opt) {
-            case 't':
-                threads_num = atoi(optarg);
-                printf("%d\n", threads_num);
-                break;
             case 'n':
                 num = atoi(optarg);
-                printf("%d\n", num);
-                //здесь обработка числа чисел
+                if (num <= 0) {
+                    printf("Incorrect number of numbers");
+                    return -1;
+                  }
                 break;
             case 'f':
                 filename = optarg;
-                printf("%s\n", filename);
-                //здесь проверка на файл
-                //на открытие файла
-                //на валидность
                 break;
         }
     }
+
     int* arr = read_from_file(filename, num);
     if (arr == NULL) {
         return -1;
@@ -89,7 +82,7 @@ int main(int argc, char** argv) {
     //наивная реализация
     start_t = clock();
     size_t result = 0;
-    printf("%d", check(predicate, arr, num, &result));
+    printf("code: %d, result: %zu", check(predicate, arr, num, &result), result);
     end_t = clock();
     total_t = (end_t - start_t) / CLOCKS_PER_SEC;
     printf("Time taken: %ld", total_t);
@@ -109,9 +102,10 @@ int main(int argc, char** argv) {
     int (*check_p)(int (*f)(int), int* arr, size_t arr_size, size_t* summ);
     check_p = dlsym(library, "check_p");
 
+
     //прогоняем тесты
     start_t = clock();
-    printf("%d", check_p(predicate, arr, num, &threads_num));
+    printf("code: %d, result: %zu", check_p(predicate, arr, num, &result));
     end_t = clock();
     total_t = (end_t - start_t) / CLOCKS_PER_SEC;
     printf("Время, затраченное параллельной реализацией: %ld", total_t);

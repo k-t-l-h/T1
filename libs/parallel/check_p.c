@@ -8,7 +8,7 @@ int check_predicate_range(int (*f)(int), int *arr, size_t begin, size_t end,
                           size_t *summ) {
   //нам передали что-то не то
   if (f == NULL || arr == NULL || summ == NULL) {
-    return 1;
+    return -1;
   }
 
   //на всякий случай обнуляем
@@ -24,7 +24,7 @@ int check_predicate_range(int (*f)(int), int *arr, size_t begin, size_t end,
 }
 
 //параллельная реализация с передаваемым числом
-int check_p(int (*f)(int), int *arr, size_t arr_size, int *result) {
+int check_p(int (*f)(int), int *arr, size_t arr_size, size_t *result) {
   *result = 0;
 
   if (arr == NULL || f == NULL || result == NULL) {
@@ -33,8 +33,12 @@ int check_p(int (*f)(int), int *arr, size_t arr_size, int *result) {
 
   //смотрим, сколько потоков мы можем сделать
   size_t process = sysconf(_SC_NPROCESSORS_ONLN);
+  if (process <= 0) {
+    return -1;
+  }
+
   //создаем каналы
-  pipes_t *pipes = create(process);
+  pipes_t *pipes = create_pipes(process);
   if (pipes == NULL) {
     return -1;
   }
@@ -82,5 +86,6 @@ int check_p(int (*f)(int), int *arr, size_t arr_size, int *result) {
   if (free_pipes(pipes)) {
     return -1;
   }
+
   return 0;
 }
