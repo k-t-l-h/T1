@@ -8,7 +8,7 @@ typedef struct {
   size_t size;  //сколько процессов у нас есть
 } pipes_t;
 
-size_t check_p(int (*)(int), int*, size_t, int*);
+int check_p(int (*)(int), int*, size_t, int*);
 pipes_t* create(size_t);
 int free_pipes(pipes_t*);
 

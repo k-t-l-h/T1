@@ -88,24 +88,28 @@ int main(int argc, char** argv) {
     clock_t start_t, end_t, total_t;
     //наивная реализация
     start_t = clock();
-    printf("%d", check(predicate, arr, num));
+    size_t result = 0;
+    printf("%d", check(predicate, arr, num, &result));
     end_t = clock();
     total_t = (end_t - start_t) / CLOCKS_PER_SEC;
     printf("Time taken: %ld", total_t);
 
     //работа с динамической библиотекой
 
+
     void *library;
     library = dlopen("checks.so", RTLD_NOW);
     if (NULL == library) {
+      free(arr);
       printf("Библиотека checks.so была не найдена, вернитесь позже");
-      return 0;
+      return -1;
     }
     //создаем указатель на функцию
     int summ = 0;
-    size_t (*check_p)(int (*f)(int), int* arr, size_t arr_size, int* summ);
+    int (*check_p)(int (*f)(int), int* arr, size_t arr_size, size_t* summ);
     check_p = dlsym(library, "check_p");
 
+    //прогоняем тесты
     start_t = clock();
     printf("%d", check_p(predicate, arr, num, &threads_num));
     end_t = clock();

@@ -5,7 +5,7 @@
 #include <string.h>
 
 int check_predicate_range(int (*f)(int), int *arr, size_t begin, size_t end,
-                          int *summ) {
+                          size_t *summ) {
   //нам передали что-то не то
   if (f == NULL || arr == NULL || summ == NULL) {
     return 1;
@@ -24,11 +24,11 @@ int check_predicate_range(int (*f)(int), int *arr, size_t begin, size_t end,
 }
 
 //параллельная реализация с передаваемым числом
-size_t check_p(int (*f)(int), int *arr, size_t arr_size, int *result) {
+int check_p(int (*f)(int), int *arr, size_t arr_size, int *result) {
   *result = 0;
 
-  if (arr == NULL || f == NULL) {
-    return result;
+  if (arr == NULL || f == NULL || result == NULL) {
+    return -1;
   }
 
   //смотрим, сколько потоков мы можем сделать
@@ -36,7 +36,7 @@ size_t check_p(int (*f)(int), int *arr, size_t arr_size, int *result) {
   //создаем каналы
   pipes_t *pipes = create(process);
   if (pipes == NULL) {
-    return result;
+    return -1;
   }
 
   size_t part = (size_t)(arr_size / process);
@@ -46,7 +46,7 @@ size_t check_p(int (*f)(int), int *arr, size_t arr_size, int *result) {
     //не вышло
     if (pid == -1) {
       free_pipes(pipes);
-      return result;
+      return -1;
     }
     //вышло, мы в потомке
     if (pid == 0) {
@@ -55,8 +55,8 @@ size_t check_p(int (*f)(int), int *arr, size_t arr_size, int *result) {
 
       size_t start = i * part;
       size_t end = i < process - 1 ? start + part : arr_size;
-      int sum = 0;
-      check_predicate_range(f, arr, start, end, sum);
+      size_t sum = 0;
+      check_predicate_range(f, arr, start, end, &sum);
 
       //получить из потока число
       //число вернуть

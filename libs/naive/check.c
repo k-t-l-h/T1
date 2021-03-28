@@ -4,17 +4,17 @@
 #include <string.h>
 
 //наивная реализация с передаваемым числом
-size_t check(int (*f)(int), int* arr, size_t arr_size) {
-    size_t result = 0;
+int check(int (*f)(int), int* arr, size_t arr_size, size_t* result) {
+    (*result) = 0;
 
-    if (arr == NULL || f == NULL) {
-        return result;
+    if (arr == NULL || f == NULL || result == NULL) {
+        return -1;
     }
 
     for (int i = 0; i < arr_size; ++i) {
         if (f(arr[i])) {
-            result++;
+          (*result)++;
         }
     }
-    return result;
+    return 0;
 }
