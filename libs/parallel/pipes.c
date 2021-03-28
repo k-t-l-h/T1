@@ -30,24 +30,12 @@ pipes_t *create_pipes(size_t size) {
     pipes->fd[i] = (int *)malloc(2 * sizeof(int *));
     if (pipes->fd[i] == NULL) {
       //закрываем все что успели открыть
-      for (size_t j = 0; j < i; ++j) {
-        close(pipes->fd[i][0]);
-        close(pipes->fd[i][1]);
-        free(pipes->fd[i]);
-      }
-      free(pipes->fd);
-      free(pipes);
+      free_pipes(pipes);
       return NULL;
     }
     //пытаемся заполнить новыми дескрипторами
     if (pipe(pipes->fd[i]) != 0) {
-      for (size_t j = 0; j < size; ++j) {
-        close(pipes->fd[i][0]);
-        close(pipes->fd[i][1]);
-        free(pipes->fd[i]);
-      }
-      free(pipes->fd);
-      free(pipes);
+      free_pipes(pipes);
       return NULL;
     }
   }

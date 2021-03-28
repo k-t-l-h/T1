@@ -85,6 +85,7 @@ TEST(TEST_CHECK_PIPES, delete_pipes_bad) {
   ASSERT_EQ(result, -1);
 }
 
+
 TEST(TEST_CHECK_PIPES, delete_pipes_good) {
   pipes_t *pipes = nullptr;
   pipes = create_pipes(5);
