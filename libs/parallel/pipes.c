@@ -19,7 +19,7 @@ pipes_t *create_pipes(size_t size) {
   pipes->size = size;
 
   //память под дескрипторы
-  pipes->fd = (int*)malloc(size * sizeof(int*));
+  pipes->fd = (int**)malloc(size * sizeof(int*));
   if (pipes->fd == NULL) {
     free(pipes);
     return NULL;
@@ -27,7 +27,7 @@ pipes_t *create_pipes(size_t size) {
 
   for (size_t i = 0; i < size; ++i) {
     //готовим массив
-    pipes->fd[i] = (int *)malloc(2 * sizeof(int *));
+    pipes->fd[i] = (int *)malloc(2 * sizeof(int));
     if (pipes->fd[i] == NULL) {
       //закрываем все что успели открыть
       free_pipes(pipes);
@@ -54,5 +54,20 @@ int free_pipes(pipes_t *pipes) {
   }
   free(pipes->fd);
   free(pipes);
+  return 0;
+}
+
+int write_pipe(pipes_t *pipes, size_t pipe_index, int value) {
+  if (NULL == pipes) {
+    return -1;
+  }
+
+  if (pipe_index >= pipes->size) {
+    return -1;
+  }
+
+  if (write(pipes->fd[pipe_index][1], &value, sizeof(value)) != -1) {
+    return -1;
+  }
   return 0;
 }

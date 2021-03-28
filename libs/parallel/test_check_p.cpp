@@ -94,6 +94,31 @@ TEST(TEST_CHECK_PIPES, delete_pipes_good) {
   ASSERT_NE(result, -1);
 }
 
+TEST(TEST_CHECK_PIPES, write_pipe_all_good) {
+  pipes_t *pipes = nullptr;
+  pipes = create_pipes(5);
+  int result = 0;
+  result = write_pipe(pipes, 0, 1);
+  ASSERT_NE(result, -1);
+  free_pipes(pipes);
+}
+
+TEST(TEST_CHECK_PIPES, write_pipe_wrong_size) {
+  pipes_t *pipes = nullptr;
+  pipes = create_pipes(5);
+  int result = 0;
+  result = write_pipe(pipes, 10, 1);
+  ASSERT_EQ(result, -1);
+  free_pipes(pipes);
+}
+
+TEST(TEST_CHECK_PIPES, write_pipe_wrong_ptr) {
+  pipes_t *pipes = nullptr;
+  int result = 0;
+  result = write_pipe(pipes, 1, 1);
+  ASSERT_EQ(result, -1);
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

@@ -11,6 +11,7 @@ typedef struct {
 int check_predicate_range(int (*)(int), int*, size_t, size_t, size_t *);
 int check_p(int (*)(int), int*, size_t, size_t*);
 pipes_t* create_pipes(size_t);
+int write_pipe(pipes_t *pipes, size_t pipe_index, int value);
 int free_pipes(pipes_t*);
 
 #endif  // T1_CHECK_P_H

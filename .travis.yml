@@ -33,6 +33,7 @@ script:
   - make
   - valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --leak-resolution=med --track-origins=yes ./test_check.out || travis_terminate 1
   - valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --leak-resolution=med --track-origins=yes ./test_check_p.out || travis_terminate 1
+  #- ./T1 -n 1000000 -f SOURCE_DIR/data.txt
 
 after_success:
   - lcov --capture --directory . --output-file coverage.info
