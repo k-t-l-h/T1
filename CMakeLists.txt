@@ -12,10 +12,15 @@ add_library(PREDICATE_CHECK STATIC libs/naive/check.c)
 #здесь динамическая библиотека
 add_library(PREDICATE_CHECK_P SHARED libs/parallel/check_p.c libs/parallel/pipes.c)
 
+file(COPY data/data.txt
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 
 add_executable(T1 main.c)
 target_link_libraries(T1 ${CMAKE_DL_LIBS} PREDICATE_CHECK PREDICATE_CHECK_P)
+
+add_definitions(-DSOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
+
 
 if (ENABLE_TESTS)
     enable_testing()
@@ -49,7 +54,5 @@ if (ENABLE_TESTS)
     target_link_libraries(test_check_p.out pthread)
 
     add_test(test_check_p.out test_check_p.out)
-
-
 endif()
 

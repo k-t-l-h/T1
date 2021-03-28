@@ -65,8 +65,11 @@ int check_p(int (*f)(int), int *arr, size_t arr_size, size_t *result) {
       //получить из потока число
       //число вернуть
       //так можно, но нужно ли?..
-      write(pipes->fd[i][1], &sum, sizeof(sum));
-      exit(EXIT_SUCCESS);
+      if (write_pipe(pipes, i, (int)sum) == 0) {
+        exit(EXIT_SUCCESS);
+      } else {
+        exit(EXIT_FAILURE);
+      }
     }
   }
   //Не создаем зомби, проверяем все процессы

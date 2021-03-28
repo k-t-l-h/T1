@@ -23,7 +23,7 @@ int* read_from_file(char* filename, size_t num) {
     if (NULL == fp) {
         printf("file not found");
         return NULL;
-    };
+    }
 
     int* arr = (int*)calloc(num, sizeof(int*));
     //считать из файла
@@ -70,6 +70,8 @@ int main(int argc, char** argv) {
             case 'f':
                 filename = optarg;
                 break;
+            default:
+              break;
         }
     }
 
@@ -98,14 +100,12 @@ int main(int argc, char** argv) {
       return -1;
     }
     //создаем указатель на функцию
-    int summ = 0;
     int (*check_p)(int (*f)(int), int* arr, size_t arr_size, size_t* summ);
     check_p = dlsym(library, "check_p");
 
-
     //прогоняем тесты
     start_t = clock();
-    printf("code: %d, result: %zu", check_p(predicate, arr, num, &result));
+    printf("code: %d, result: %zu", check_p(predicate, arr, num, &result), result);
     end_t = clock();
     total_t = (end_t - start_t) / CLOCKS_PER_SEC;
     printf("Время, затраченное параллельной реализацией: %ld", total_t);
