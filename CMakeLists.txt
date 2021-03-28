@@ -10,7 +10,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=c++0x -Wall -Werror -Wpedantic")
 #здесь статическая библиотека
 add_library(PREDICATE_CHECK STATIC libs/naive/check.c)
 #здесь динамическая библиотека
-add_library(PREDICATE_CHECK_P SHARED libs/parallel/check_p.c)
+add_library(PREDICATE_CHECK_P SHARED libs/parallel/check_p.c libs/parallel/pipes.c)
 
 
 

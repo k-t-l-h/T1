@@ -1,10 +1,10 @@
 #include <dlfcn.h> //для работы с динамической библиотекой
+#include "libs/naive/check.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
-#include "libs/naive/check.h"
 
 /*
  * Вариант #7
@@ -85,10 +85,16 @@ int main(int argc, char** argv) {
         return -1;
     }
 
+    clock_t start_t, end_t, total_t;
     //наивная реализация
+    start_t = clock();
     printf("%d", check(predicate, arr, num));
+    end_t = clock();
+    total_t = (end_t - start_t) / CLOCKS_PER_SEC;
+    printf("Time taken: %ld", total_t);
 
     //работа с динамической библиотекой
+
     void *library;
     library = dlopen("checks.so", RTLD_NOW);
     if (NULL == library) {
@@ -96,11 +102,19 @@ int main(int argc, char** argv) {
       return 0;
     }
     //создаем указатель на функцию
-    size_t (*check_p)(int (*f)(int), int* arr, size_t arr_size, int threads);
+    int summ = 0;
+    size_t (*check_p)(int (*f)(int), int* arr, size_t arr_size, int* summ);
     check_p = dlsym(library, "check_p");
 
-    printf("%d", check_p(predicate, arr, num, threads_num));
+    start_t = clock();
+    printf("%d", check_p(predicate, arr, num, &threads_num));
+    end_t = clock();
+    total_t = (end_t - start_t) / CLOCKS_PER_SEC;
+    printf("Время, затраченное параллельной реализацией: %ld", total_t);
+
     dlclose(library);
+
+    free(arr);
 
   return 0;
 }
