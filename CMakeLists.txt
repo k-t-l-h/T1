@@ -10,15 +10,14 @@ set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=c++0x -Wall -Werror -Wpedantic")
 #здесь статическая библиотека
 add_library(PREDICATE_CHECK STATIC libs/naive/check.c)
 #здесь динамическая библиотека
-#add_library(PREDICATE_CHECK_P SHARED libs/parallel/check_p.c libs/parallel/pipes.c)
+add_library(PREDICATE_CHECK_P SHARED libs/parallel/check_p.c libs/parallel/pipes.c)
 
 file(COPY data/data.txt
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 
 add_executable(T1 main.c)
-target_link_libraries(T1 ${CMAKE_DL_LIBS} PREDICATE_CHECK)
-#target_link_libraries(T1 ${CMAKE_DL_LIBS} PREDICATE_CHECK PREDICATE_CHECK_P)
+target_link_libraries(T1 ${CMAKE_DL_LIBS} PREDICATE_CHECK PREDICATE_CHECK_P)
 
 if (ENABLE_TESTS)
     enable_testing()
