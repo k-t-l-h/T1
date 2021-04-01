@@ -1,0 +1,4 @@
+ignore:
+  - "main.c"
+  - "libs/naive/test_check.cpp"
+  - "libs/parallel/test_check_p.cpp"

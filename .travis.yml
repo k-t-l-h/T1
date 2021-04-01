@@ -28,7 +28,7 @@ compiler:
   - gcc
 
 script:
-  - сppcheck --enable=all --language=c libs/*/*
+  #- сppcheck --enable=all --language=c libs/*/*
   - mkdir build
   - cd build
   - cmake .. -DENABLE_TESTS=ON
@@ -38,10 +38,7 @@ script:
   - ./T1 -n 1000000 -f data.txt
 
 after_success:
-  - lcov --capture --directory ./libs --output-file coverage.info
-  - lcov --remove coverage.info '/usr/*' --output-file coverage.info
-  - lcov --list coverage.info
-  - bash <(curl -s https://codecov.io/bash) -f coverage.info
+  - bash <(curl -s https://codecov.io/bash)
 
 #я так больше не могу
 notifications:
