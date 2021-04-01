@@ -16,7 +16,7 @@ int check_predicate_range(int (*f)(int), int *arr, size_t begin, size_t end,
 
   for (size_t i = begin; i < end; ++i) {
     if (f(arr[i])) {
-      *summ += 1;
+      ++(*summ);
     }
   }
 
