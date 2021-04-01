@@ -11,7 +11,7 @@ int check(int (*f)(int), int* arr, size_t arr_size, size_t* result) {
         return -1;
     }
 
-    for (int i = 0; i < arr_size; ++i) {
+    for (size_t i = 0; i < arr_size; ++i) {
         if (f(arr[i])) {
           (*result)++;
         }

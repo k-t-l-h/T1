@@ -8,6 +8,7 @@ addons:
     packages:
       - valgrind
       - lcov
+      - cppcheck
 
 install:
   - sudo apt-get update
@@ -29,6 +30,7 @@ compiler:
 script:
   - mkdir build
   - cd build
+  - cppcheck --enable=all --language=c libs
   - cmake .. -DENABLE_TESTS=ON
   - make
   - valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --leak-resolution=med --track-origins=yes ./test_check.out || travis_terminate 1

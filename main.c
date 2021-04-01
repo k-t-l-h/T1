@@ -25,6 +25,11 @@ int* read_from_file(char* filename, size_t num) {
   }
 
   int* arr = (int*)calloc(num, sizeof(int*));
+  if (NULL == arr) {
+    close(fp);
+    return NULL;
+  }
+  
   //считать из файла
   for (size_t i = 0; i < num; ++i) {
     if (fscanf(fp, "%d", &arr[i]) != 1) {

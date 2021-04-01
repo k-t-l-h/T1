@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "check_p.h"
+#define DESCRIPTORS 2 //немагическое число дескрипторов для pipe
 
 pipes_t *create_pipes(size_t size) {
   //не создаем пустые структуры
@@ -27,7 +28,7 @@ pipes_t *create_pipes(size_t size) {
 
   for (size_t i = 0; i < size; ++i) {
     //готовим массив
-    pipes->fd[i] = (int *)malloc(2 * sizeof(int));
+    pipes->fd[i] = (int *)malloc(DESCRIPTORS * sizeof(int));
     if (pipes->fd[i] == NULL) {
       //закрываем все что успели открыть
       free_pipes(pipes);
