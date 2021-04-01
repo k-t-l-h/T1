@@ -9,7 +9,7 @@ int predicate(int a) {
 }
 
 int second_predicate(int a) {
-  return (a+2 % 5) == 0;
+  return ((a+2) % 5) == 0;
 }
 
 //не передан предикат

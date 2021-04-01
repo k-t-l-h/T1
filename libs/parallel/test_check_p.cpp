@@ -70,15 +70,16 @@ TEST(TEST_CHECK_P_P, all_good) {
 
 //передан массив + второй предикат
 TEST(TEST_CHECK_P_P, all_good_2) {
-int arr[10] = {
-    -31261, -3194, 823, -4546, 14967,
-    -31260, -3195, 824, -4548, 14962,
-};
-size_t num =10;
-size_t result = 0;
-int code  = check_predicate_range(second_predicate, arr, 0, num, &result);
-ASSERT_EQ(code, 0);
-ASSERT_EQ(result, 5);
+  int arr[10] = {
+      -31261, -3194, 823, -4546, 14967,
+      -31260, -3195, 824, -4548, 14962,
+  };
+  size_t num = 10;
+  size_t result = 0;
+  int code  = check_predicate_range(second_predicate, arr, 0, num, &result);
+  ASSERT_EQ(code, 0);
+  //суровая реальность с отрицательным результатом mod
+  ASSERT_EQ(result, 2);
 }
 
 
