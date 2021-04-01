@@ -1,0 +1,43 @@
+language: c
+
+os: linux
+
+
+addons:
+  apt:
+    packages:
+      - valgrind
+      - lcov
+
+install:
+  - sudo apt-get update
+  - sudo apt-get install valgrind
+  - sudo apt-get install clang-format
+  - sudo apt-get install libstdc++6
+  - sudo apt-get install cmake
+  - sudo apt-get install lcov
+  - sudo apt-get install libgtest-dev
+  - cd /usr/src/gtest
+  - sudo cmake .
+  - sudo make
+  - sudo cp *.a /usr/lib
+  - cd -
+
+compiler:
+  - gcc
+
+script:
+  - mkdir build
+  - cd build
+  - cmake .. -DENABLE_TESTS=ON -DENABLE_STATIC_CHECK=ON
+  - make
+  - valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --leak-resolution=med --track-origins=yes ./test_check.out || travis_terminate 1
+  - valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --leak-resolution=med --track-origins=yes ./test_check_p.out || travis_terminate 1
+  - ./T1 -n 1000000 -f data.txt
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+#я так больше не могу
+notifications:
+  email: false
