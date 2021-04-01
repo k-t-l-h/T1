@@ -5,6 +5,8 @@
 #include <time.h>
 #include <unistd.h>
 
+#define ITERATIONS 100
+
 /*
  * Вариант #7
  * В вашем распоряжении — массив из 100 млн. чисел.
@@ -29,7 +31,7 @@ int* read_from_file(char* filename, size_t num) {
     close(fp);
     return NULL;
   }
-  
+
   //считать из файла
   for (size_t i = 0; i < num; ++i) {
     if (fscanf(fp, "%d", &arr[i]) != 1) {
@@ -44,7 +46,7 @@ int* read_from_file(char* filename, size_t num) {
   return arr;
 }
 
-int predicate(int a) {
+int simple_predicate(int a) {
   if (a > 0) {
     return 1;
   }
@@ -88,7 +90,7 @@ int main(int argc, char** argv) {
   //наивная реализация
   start_t = clock();
   size_t result = 0;
-  int code = check(predicate, arr, num, &result);
+  int code = check(simple_predicate, arr, num, &result);
   printf("(Naive version) Return code: %d, result: %zu\n", code, result);
   end_t = clock();
   double total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
@@ -106,12 +108,16 @@ int main(int argc, char** argv) {
   int (*check_p)(int (*f)(int), int* arr, size_t arr_size, size_t* summ);
   check_p = dlsym(library, "check_p");
 
-  //прогоняем тесты
-  start_t = clock();
-  code = check_p(predicate, arr, num, &result);
-  printf("(Parallel version) Return code: %d, result: %zu\n", code, result);
-  end_t = clock();
-  total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+  //усредненный прогон тестов
+  for (size_t i = 0; i < ITERATIONS; ++i) {
+    //прогоняем тесты
+    start_t = clock();
+    code = check_p(simple_predicate, arr, num, &result);
+    end_t = clock();
+    total_t += (double)(end_t - start_t) / CLOCKS_PER_SEC;
+  }
+
+  total_t /= ITERATIONS;
   printf("(Parallel version) Time taken: %lf\n", total_t);
 
   dlclose(library);
