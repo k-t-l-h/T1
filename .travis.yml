@@ -1,0 +1,43 @@
+language: c
+
+os: linux
+
+addons:
+  apt:
+    packages:
+      - valgrind
+      - lcov
+
+compiler:
+  - gcc
+
+install:
+  - sudo apt-get update
+  - sudo apt-get install valgrind
+  - sudo apt-get install clang-format
+  - sudo apt-get install libstdc++6
+  - sudo apt-get install cmake
+  - sudo apt-get install lcov
+  # Google tests
+  - sudo apt-get install libgtest-dev
+  - cd /usr/src/gtest
+  - sudo cmake .
+  - sudo make
+  - sudo cp *.a /usr/lib
+  - cd -
+
+before_script:
+  - cd src
+  - clang-format -i -style=Google *.h *.cpp *.c
+
+script:
+  - cmake .. #-DENABLE_STATIC_CHECK=ON
+  - make
+  - valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --leak-resolution=med  --track-origins=yes ./test_toy.out || travis_terminate 1
+
+
+after_success:
+  - lcov --capture --directory . --output-file coverage.info
+  - lcov --remove coverage.info '/usr/*' --output-file coverage.info
+  - lcov --list coverage.info
+  - bash <(curl -s https://codecov.io/bash) -f coverage.info
